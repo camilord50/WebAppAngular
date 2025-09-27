@@ -69,4 +69,111 @@ FROM Sales.Shippers;
 SELECT 
     productid,
     productname
+
 FROM Production.Products;
+
+
+
+---PROCEDIMIENTO ALMACENADO
+
+USE [StoreSample]
+GO
+/****** Object:  StoredProcedure [Sales].[usp_AddNewOrder]    Script Date: 27/09/2025 5:01:11 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [Sales].[usp_AddNewOrder]
+    @CustId INT,                 -- Id del cliente
+    @EmpId INT,                  -- Id del empleado
+    @OrderDate DATETIME,
+    @RequiredDate DATETIME,
+    @ShippedDate DATETIME = NULL,
+    @ShipperId INT,
+    @Freight MONEY,
+    @ShipName NVARCHAR(100),
+    @ShipAddress NVARCHAR(200),
+    @ShipCity NVARCHAR(100),
+    @ShipCountry NVARCHAR(100),
+
+  
+    @ProductId INT,
+    @UnitPrice MONEY,
+    @Qty SMALLINT,
+    @Discount REAL = 0.0,
+
+    @NewOrderId INT OUTPUT 
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- 1. Insertar en Orders
+        INSERT INTO Sales.Orders (
+            custid,
+            empid,
+            orderdate,
+            requireddate,
+            shippeddate,
+            shipperid,
+            freight,
+            shipname,
+            shipaddress,
+            shipcity,
+            shipcountry
+        )
+        VALUES (
+            @CustId,
+            @EmpId,
+            @OrderDate,
+            @RequiredDate,
+            @ShippedDate,
+            @ShipperId,
+            @Freight,
+            @ShipName,
+            @ShipAddress,
+            @ShipCity,
+            @ShipCountry
+        );
+
+        -- Obtener el ID de la orden creada
+        SET @NewOrderId = SCOPE_IDENTITY();
+
+        -- 2. Insertar en OrderDetails
+        INSERT INTO Sales.OrderDetails (
+            orderid,
+            productid,
+            unitprice,
+            qty,
+            discount
+        )
+        VALUES (
+            @NewOrderId,
+            @ProductId,
+            @UnitPrice,
+            @Qty,
+            @Discount
+        );
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
+        THROW;
+    END CATCH
+END;
+
+
+
+
+
+
+
+
+
+
+
