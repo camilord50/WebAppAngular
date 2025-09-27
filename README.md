@@ -52,3 +52,11 @@ Aquí las pruebas unitarias.
 # Graficando con D3
 
 el archivo "Grafica D3.rar" contiene el archivo index.html el cual tiene el codigo siguiendo las instrucciones del punto.
+
+
+# QUERY SQL - BASE DE DATOS
+
+el archivo QUERYSQL.txt contiene las sentencias DML necesarias y utilizadas para el desarrollo de la prueba tecnica
+
+
+
