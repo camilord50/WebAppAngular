@@ -57,6 +57,6 @@ el archivo "Grafica D3.rar" contiene el archivo index.html el cual tiene el codi
 # QUERY SQL - BASE DE DATOS
 
 el archivo QUERYSQL.txt contiene las sentencias DML necesarias y utilizadas para el desarrollo de la prueba tecnica
-
+asi como tambien el script del procedimiento almacenado "usp_AddNewOrder" utilizado para la funcionalidad del endpoint Add New Order
 
 
