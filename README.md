@@ -1,27 +1,54 @@
-# SalesPredictionApp
+# SalesPredictionApp - Web App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.3.
+La aplicacion Web App fue desarrollada utilizando el framework Angular
+y se requieren las siguientes versiones:
 
-## Development server
+-Angular CLI: 17.3.17
+-Node: 18.20.0
+-Package Manager: npm 10.5.0
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+se ejecuta el comando para instalar dependencias necesarias:
 
-## Code scaffolding
+npm install
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+para la configuracion de la URL de la API se ubica el archivo "proxy.conf.json" y se modifica 
+el valor de target de acuerdo al puerto que utilice la API durante su despliegue y se ejecuta 
+el siguiente comando en la consola para iniciar la aplicacion:
 
-## Build
+ng serve --proxy-config proxy.conf.json
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+# SalesDatePrediction - API
 
-## Running unit tests
+el archivo llamado "SalesDatePrediction.rar" contiene la solucion de la api llamada "SalesDatePrediction" la cual aplica una separación en capas y principios SOLID, 
+se debe utilizar un IDE Visual Studio 2022 (o superior) y carga de trabajo "Desarrollo para ASP.NET y web” (ASP.NET and web development)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+String de conexion
+para configurar la cadena de conexion de la API se debe ubicar el archivo "appsettings.json" en la solucion SalesDatePrediction.Api y se actualiza "DefaultConnection" de acuerdo a las credenciales que tenga definidas en el equipo en SQLServer
 
-## Running end-to-end tests
+la API se encuentra estructurado de la siguiente manera.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+01.Presentacion
+Proyecto: ASP.NET Core Web API
+Nombre: SalesDatePrediction.Api
+Framework: .NET 8.0
+Aquí van los Controllers.
 
-## Further help
+02.Servicio
+Proyecto: Biblioteca de clases (.NET 8.0)
+Nombre: SalesDatePrediction.Servicio
+Aquí van los DTOs, Repositorio, Servicios.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+03.DataAccess
+Proyecto: Biblioteca de clases (.NET 8.0)
+Nombre: SalesDatePrediction.Dominio
+Aquí van los Models.
+
+04.Pruebas
+Proyecto: xUnit Test Project (.NET 8.0)
+Nombre: SalesDatePrediction.Tests
+Aquí las pruebas unitarias.
+
+
+# Graficando con D3
+
+el archivo "Grafica D3.rar" contiene el archivo index.html el cual tiene el codigo siguiendo las instrucciones del punto.
