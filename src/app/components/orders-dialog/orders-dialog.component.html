@@ -1,0 +1,19 @@
+<h2 class="orders-header">Customer {{customerName}} - Orders</h2>
+
+<mat-dialog-content>
+  <table mat-table [dataSource]="orders" class="full-width">
+    <ng-container matColumnDef="orderId"><th mat-header-cell *matHeaderCellDef>Order ID</th><td mat-cell *matCellDef="let o">{{o.orderId}}</td></ng-container>
+    <ng-container matColumnDef="requiredDate"><th mat-header-cell *matHeaderCellDef>Required Date</th><td mat-cell *matCellDef="let o">{{o.requiredDate | date:'shortDate'}}</td></ng-container>
+    <ng-container matColumnDef="shippedDate"><th mat-header-cell *matHeaderCellDef>Shipped Date</th><td mat-cell *matCellDef="let o">{{o.shippedDate | date:'shortDate'}}</td></ng-container>
+    <ng-container matColumnDef="shipName"><th mat-header-cell *matHeaderCellDef>Ship Name</th><td mat-cell *matCellDef="let o">{{o.shipName}}</td></ng-container>
+    <ng-container matColumnDef="shipAddress"><th mat-header-cell *matHeaderCellDef>Ship Address</th><td mat-cell *matCellDef="let o">{{o.shipAddress}}</td></ng-container>
+    <ng-container matColumnDef="shipCity"><th mat-header-cell *matHeaderCellDef>Ship City</th><td mat-cell *matCellDef="let o">{{o.shipCity}}</td></ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button color="primary" (click)="close()">CLOSE</button>
+</mat-dialog-actions>
