@@ -1,0 +1,72 @@
+--Sales Date Prediction
+
+
+WITH OrderIntervals AS (
+    SELECT 
+        C.custid,
+        C.companyname AS CustomerName,
+        O.orderdate,
+        LAG(O.orderdate) OVER (PARTITION BY C.custid ORDER BY O.orderdate) AS PrevOrderDate,
+        DATEDIFF(DAY, 
+                 LAG(O.orderdate) OVER (PARTITION BY C.custid ORDER BY O.orderdate), 
+                 O.orderdate) AS DaysBetweenOrders
+    FROM Sales.Customers C
+    INNER JOIN Sales.Orders O ON C.custid = O.custid
+)
+, CustomerPredictions AS (
+    SELECT 
+        custid,
+        CustomerName,
+        MAX(orderdate) AS LastOrderDate,
+        AVG(CAST(DaysBetweenOrders AS FLOAT)) AS AvgDaysBetweenOrders,
+        COUNT(DaysBetweenOrders) AS NumberOfIntervals
+    FROM OrderIntervals
+    WHERE PrevOrderDate IS NOT NULL
+    GROUP BY custid, CustomerName
+)
+SELECT 
+	custid,
+    CustomerName,
+    LastOrderDate,
+    DATEADD(DAY, ROUND(AvgDaysBetweenOrders, 0), LastOrderDate) AS NextPredictedOrder
+FROM CustomerPredictions
+WHERE NumberOfIntervals > 0
+ORDER BY CustomerName;
+
+
+
+
+--Get Client Orders
+
+SELECT 
+    O.orderid,
+    O.requireddate,
+    O.shippeddate,
+    O.shipname,
+    O.shipaddress,
+    O.shipcity
+FROM Sales.Orders O
+INNER JOIN Sales.Customers C ON O.custid = C.custid
+--WHERE C.companyname = @CustomerName; 
+WHERE C.companyname = 'Customer NRZBB'; 
+
+--Get Employees
+
+SELECT 
+    empid,
+    firstname + ' ' + lastname AS FullName
+FROM HR.Employees;
+
+--Get Shippers
+
+SELECT 
+    shipperid,
+    companyname
+FROM Sales.Shippers;
+
+--Get Products
+
+SELECT 
+    productid,
+    productname
+FROM Production.Products;
